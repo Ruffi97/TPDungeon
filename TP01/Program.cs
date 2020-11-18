@@ -141,6 +141,35 @@ namespace TP01
             }
             return roomID;
         }
+        private static void GameOver()
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
+            Console.WriteLine(" █  ■         ■  █");
+            Console.WriteLine(" █    ■     ■    █");
+            Console.WriteLine(" █      ■ ■      █");
+            Console.WriteLine(" █     ■   ■     █");
+            Console.WriteLine(" █   ■       ■   █");
+            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
+            Console.ReadKey();
+        }
+
+        private static void Win()
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █      EXIT     █");
+            Console.WriteLine(" █       ☻       █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine(">>>>>>>>>>>> You found the EXIT... Congratulations:)");
+            Console.ReadKey();
+        }
 
         static void Main(string[] args)
         {
@@ -186,36 +215,6 @@ namespace TP01
                     gameRunning = false;
                 }
             }
-        }
-
-        private static void GameOver()
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █  ■         ■  █");
-            Console.WriteLine(" █    ■     ■    █");
-            Console.WriteLine(" █      ■ ■      █");
-            Console.WriteLine(" █     ■   ■     █");
-            Console.WriteLine(" █   ■       ■   █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
-            Console.ReadKey();
-        }
-
-        private static void Win()
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █      EXIT     █");
-            Console.WriteLine(" █       ☻       █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine(">>>>>>>>>>>> You found the EXIT... Congratulations:)");
-            Console.ReadKey();
-        }
+        }      
     }
 }
