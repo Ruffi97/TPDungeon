@@ -8,7 +8,7 @@ namespace TP01
 {
     class Program
     {
-        static void room1(int roomID)
+        static int room1(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine("▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
@@ -40,9 +40,10 @@ namespace TP01
                 Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
+            return roomID;
         }
 
-        static void room2(int roomID)
+        static int room2(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
@@ -80,9 +81,10 @@ namespace TP01
                 Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
+            return roomID;
         }
 
-        static void room3(int roomID)
+        static int room3(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄");
@@ -113,9 +115,10 @@ namespace TP01
                 Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
+            return roomID;
         }
 
-        static void room5(int roomID)
+        static int room5(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
@@ -140,6 +143,7 @@ namespace TP01
                 Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
+            return roomID;
         }
 
         static void Main(string[] args)
@@ -162,15 +166,15 @@ namespace TP01
             {
                 if (room_number == 1)
                 {
-                    room1(room_number);
+                    room_number = room1(room_number);
                 }
                 else if (room_number == 2)
                 {
-                    room2(room_number);
+                    room_number = room2(room_number);
                 }
                 else if (room_number == 3)
                 {
-                    room3(room_number);
+                    room_number = room3(room_number);
                 }
                 else if (room_number == 4)
                 {
@@ -190,7 +194,7 @@ namespace TP01
                 }
                 else if (room_number == 5)
                 {
-                    room5(room_number);
+                    room_number = room5(room_number);
                 }
                 else if (room_number == 6)
                 {
