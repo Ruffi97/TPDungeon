@@ -8,177 +8,14 @@ namespace TP01
 {
     class Program
     {
-        static int room0(int roomID)
-        {
-            Console.WriteLine("");
-            Console.WriteLine("▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
-            Console.WriteLine("█               █ ");
-            Console.WriteLine("█       ▲       ▀▀");
-            Console.WriteLine("█       ☻ ►      E");
-            Console.WriteLine("█               ▄▄");
-            Console.WriteLine("█               █ ");
-            Console.WriteLine("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
-            Console.WriteLine("");
-            Console.WriteLine("There are 2 doors in your room: (n)orth,(e)ast, where do you want to go ? ");
-
-            string choice = Console.ReadLine();
-            if (choice == "n")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to north...");
-                roomID = 3;
-            }
-            else if (choice == "e")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to east...");
-                roomID = 1;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-
-        static int room1(int roomID)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine("▀▀       ▲       ▀▀");
-            Console.WriteLine("W      ◄ ☻ ►      E");
-            Console.WriteLine("▄▄               ▄▄");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
-            Console.WriteLine("");
-            Console.WriteLine("There are 3 doors in your room: (n)orth,(w)est, (e)ast, where do you want to go ? ");
-
-            string choice = Console.ReadLine();
-            if (choice == "n")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to north...");
-                roomID = 4;
-            }
-            else if (choice == "w")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to west...");
-                roomID = 0;
-            }
-            else if (choice == "e")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to east...");
-                roomID = 2;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-
-        static int room2(int roomID)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine("▀▀       ▲       █");
-            Console.WriteLine("W      ◄ ☻       █");
-            Console.WriteLine("▄▄               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine("There are 2 doors in your room: (n)orth and (w)est, where do you want to go ?");
-            string choice = Console.ReadLine();
-            if (choice == "n")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to north...");
-                roomID = 5;
-            }
-            else if (choice == "w")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to west...");
-                roomID = 1;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-
-        static int room4(int roomID)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █       ☻       █");
-            Console.WriteLine(" █       ▼       █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄ S ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine("There is only one door in your room: (s)sud");
-            string choice = Console.ReadLine();
-            if (choice == "s")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to south...");
-                roomID = 1;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-        private static void GameOver()
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █  ■         ■  █");
-            Console.WriteLine(" █    ■     ■    █");
-            Console.WriteLine(" █      ■ ■      █");
-            Console.WriteLine(" █     ■   ■     █");
-            Console.WriteLine(" █   ■       ■   █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
-            Console.ReadKey();
-        }
-
-        private static void Win()
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █      EXIT     █");
-            Console.WriteLine(" █       ☻       █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine(">>>>>>>>>>>> You found the EXIT... Congratulations:)");
-            Console.ReadKey();
-        }
+        Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
+        sentenceWhenMoving.Add("n", "> going to north...");
+        sentenceWhenMoving.Add("s", "> going to south...");
+        sentenceWhenMoving.Add("e", "> going to east..."); 
+        sentenceWhenMoving.Add("w", "> going to west...");
 
         static void Main(string[] args)
         {
-            Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
-            sentenceWhenMoving.Add("n", "going to north...");
-            sentenceWhenMoving.Add("s", "going to south...");
-            sentenceWhenMoving.Add("e", "going to east..."); 
-            sentenceWhenMoving.Add("w", "going to west...");
-
             Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("*********************************************");
             Console.WriteLine("************ Welcome to the MAZE ************");
@@ -222,5 +59,168 @@ namespace TP01
                 }
             }
         }      
+
+        static int room0(int roomID, sentenceWhenMoving)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
+            Console.WriteLine("█               █ ");
+            Console.WriteLine("█       ▲       ▀▀");
+            Console.WriteLine("█       ☻ ►      E");
+            Console.WriteLine("█               ▄▄");
+            Console.WriteLine("█               █ ");
+            Console.WriteLine("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
+            Console.WriteLine("");
+            Console.WriteLine("There are 2 doors in your room: (n)orth,(e)ast, where do you want to go ? ");
+
+            string choice = Console.ReadLine();
+            if (choice == "n")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[n]);
+                roomID = 3;
+            }
+            else if (choice == "e")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[e]);
+                roomID = 1;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }
+
+        static int room1(int roomID, sentenceWhenMoving)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
+            Console.WriteLine(" █               █ ");
+            Console.WriteLine("▀▀       ▲       ▀▀");
+            Console.WriteLine("W      ◄ ☻ ►      E");
+            Console.WriteLine("▄▄               ▄▄");
+            Console.WriteLine(" █               █ ");
+            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
+            Console.WriteLine("");
+            Console.WriteLine("There are 3 doors in your room: (n)orth,(w)est, (e)ast, where do you want to go ? ");
+
+            string choice = Console.ReadLine();
+            if (choice == "n")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[n]);
+                roomID = 4;
+            }
+            else if (choice == "w")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[w]);
+                roomID = 0;
+            }
+            else if (choice == "e")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[e]);
+                roomID = 2;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }
+
+        static int room2(int roomID, sentenceWhenMoving)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄");
+            Console.WriteLine(" █               █");
+            Console.WriteLine("▀▀       ▲       █");
+            Console.WriteLine("W      ◄ ☻       █");
+            Console.WriteLine("▄▄               █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine("There are 2 doors in your room: (n)orth and (w)est, where do you want to go ?");
+            string choice = Console.ReadLine();
+            if (choice == "n")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[n]);
+                roomID = 5;
+            }
+            else if (choice == "w")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[w]);
+                roomID = 1;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }
+
+        static int room4(int roomID, sentenceWhenMoving)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █       ☻       █");
+            Console.WriteLine(" █       ▼       █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █▄▄▄▄▄▄ S ▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine("There is only one door in your room: (s)sud");
+            string choice = Console.ReadLine();
+            if (choice == "s")
+            {
+                Console.Clear();
+                Console.WriteLine(sentenceWhenMoving[s]);
+                roomID = 1;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }
+        private static void GameOver()
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
+            Console.WriteLine(" █  ■         ■  █");
+            Console.WriteLine(" █    ■     ■    █");
+            Console.WriteLine(" █      ■ ■      █");
+            Console.WriteLine(" █     ■   ■     █");
+            Console.WriteLine(" █   ■       ■   █");
+            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
+            Console.ReadKey();
+        }
+
+        private static void Win()
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █      EXIT     █");
+            Console.WriteLine(" █       ☻       █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █               █");
+            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
+            Console.WriteLine("");
+            Console.WriteLine(">>>>>>>>>>>> You found the EXIT... Congratulations:)");
+            Console.ReadKey();
+        }
     }
 }
