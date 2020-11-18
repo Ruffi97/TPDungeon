@@ -8,7 +8,7 @@ namespace TP01
 {
     class Program
     {
-        static int room1(int roomID)
+        static int room0(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine("▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
@@ -26,7 +26,47 @@ namespace TP01
             {
                 Console.Clear();
                 Console.WriteLine("> going to north...");
+                roomID = 3;
+            }
+            else if (choice == "e")
+            {
+                Console.Clear();
+                Console.WriteLine("> going to east...");
+                roomID = 1;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }
+
+        static int room1(int roomID)
+        {
+            Console.WriteLine("");
+            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
+            Console.WriteLine(" █               █ ");
+            Console.WriteLine("▀▀       ▲       ▀▀");
+            Console.WriteLine("W      ◄ ☻ ►      E");
+            Console.WriteLine("▄▄               ▄▄");
+            Console.WriteLine(" █               █ ");
+            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
+            Console.WriteLine("");
+            Console.WriteLine("There are 3 doors in your room: (n)orth,(w)est, (e)ast, where do you want to go ? ");
+
+            string choice = Console.ReadLine();
+            if (choice == "n")
+            {
+                Console.Clear();
+                Console.WriteLine("> going to north...");
                 roomID = 4;
+            }
+            else if (choice == "w")
+            {
+                Console.Clear();
+                Console.WriteLine("> going to west...");
+                roomID = 0;
             }
             else if (choice == "e")
             {
@@ -45,46 +85,6 @@ namespace TP01
         static int room2(int roomID)
         {
             Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine("▀▀       ▲       ▀▀");
-            Console.WriteLine("W      ◄ ☻ ►      E");
-            Console.WriteLine("▄▄               ▄▄");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
-            Console.WriteLine("");
-            Console.WriteLine("There are 3 doors in your room: (n)orth,(w)est, (e)ast, where do you want to go ? ");
-
-            string choice = Console.ReadLine();
-            if (choice == "n")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to north...");
-                roomID = 5;
-            }
-            else if (choice == "w")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to west...");
-                roomID = 1;
-            }
-            else if (choice == "e")
-            {
-                Console.Clear();
-                Console.WriteLine("> going to east...");
-                roomID = 3;
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-
-        static int room3(int roomID)
-        {
-            Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄");
             Console.WriteLine(" █               █");
             Console.WriteLine("▀▀       ▲       █");
@@ -99,13 +99,13 @@ namespace TP01
             {
                 Console.Clear();
                 Console.WriteLine("> going to north...");
-                roomID = 6;
+                roomID = 5;
             }
             else if (choice == "w")
             {
                 Console.Clear();
                 Console.WriteLine("> going to west...");
-                roomID = 2;
+                roomID = 1;
             }
             else
             {
@@ -115,7 +115,7 @@ namespace TP01
             return roomID;
         }
 
-        static int room5(int roomID)
+        static int room4(int roomID)
         {
             Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
@@ -132,7 +132,7 @@ namespace TP01
             {
                 Console.Clear();
                 Console.WriteLine("> going to south...");
-                roomID = 2;
+                roomID = 1;
             }
             else
             {
@@ -173,6 +173,12 @@ namespace TP01
 
         static void Main(string[] args)
         {
+            Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
+            sentenceWhenMoving.Add("n", "going to north...");
+            sentenceWhenMoving.Add("s", "going to south...");
+            sentenceWhenMoving.Add("e", "going to east..."); 
+            sentenceWhenMoving.Add("w", "going to west...");
+
             Console.OutputEncoding = Encoding.UTF8;
             Console.WriteLine("*********************************************");
             Console.WriteLine("************ Welcome to the MAZE ************");
@@ -184,32 +190,32 @@ namespace TP01
             Console.Clear();
 
             bool gameRunning = true;
-            int room_number = 2;
+            int room_number = 1;
 
             while (gameRunning)
             {
-                if (room_number == 1)
+                if (room_number == 0)
                 {
                     room_number = room1(room_number);
                 }
-                else if (room_number == 2)
+                else if (room_number == 1)
                 {
                     room_number = room2(room_number);
                 }
-                else if (room_number == 3)
+                else if (room_number == 2)
                 {
                     room_number = room3(room_number);
                 }
-                else if (room_number == 4)
+                else if (room_number == 3)
                 {
                     GameOver();
                     gameRunning = false;
                 }
-                else if (room_number == 5)
+                else if (room_number == 4)
                 {
                     room_number = room5(room_number);
                 }
-                else if (room_number == 6)
+                else if (room_number == 5)
                 {
                     Win();
                     gameRunning = false;
