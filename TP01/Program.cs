@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,85 +23,139 @@ namespace TP01
             sentenceWhenMoving.Add("e", "> going to east...");
             sentenceWhenMoving.Add("w", "> going to west...");
 
-            List<Dictionary<string, int>> roomsDirections = new List<Dictionary<string, int>>();
+            /*List<Dictionary<string, int>> roomsDirections = new List<Dictionary<string, int>>();
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 3 },
+            { "n", 5 },
             { "e", 1 }
         });
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 4 },
+            { "n", 6 },
             { "w", 0 },
             { "e", 2 }
         });
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 5 },
+            { "n", 7 },
             { "w", 1 }
         });
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 0 }
+            { "e", 4 }
         });
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 1 }
+            { "w", 3 },
+            { "n", 9 }
         });
             roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 2 }
+            { "s", 0 },
+            { "n", 10 }
         });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 1 },
+            { "n", 11 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 2 },
+            { "w", 8 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 7 },
+            { "n", 13 },
+            { "e", 9 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 8 },
+            { "s", 4 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "n", 15 },
+            { "e", 11 },
+            { "s", 5 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 6 },
+            { "e", 12 },
+            { "w", 10 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 11 },
+            { "e", 13 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 12 },
+            { "e", 14 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 13 },
+            { "n", 19 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 10 },
+            { "n", 20 },
+            { "e", 16 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "w", 15 },
+            { "e", 17 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "n", 2 },
+            { "w", 16 },
+            { "e", 22 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 13 },
+            { "w", 17 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 14 },
+            { "n", 24 }
+        });
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 15 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "e", 22 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 17 },
+            { "w", 21 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "e", 24 }
+        }); 
+            roomsDirections.Add(new Dictionary<string, int>() {
+            { "s", 19 },
+            { "w", 23 }
+        });
+            string jsonString = JsonConvert.SerializeObject(roomsDirections);
+            Console.WriteLine(jsonString);*/
+            string str = File.ReadAllText("Data.json");
+            List<Dictionary<string, int>> roomsDirections = JsonConvert.DeserializeObject<List<Dictionary<string, int>>>(str);
 
             Console.OutputEncoding = Encoding.UTF8;
             Intro();            
             int room_number = 1;
             
             while (MyClasse.gameRunning)
-            {
-                if (room_number == 0)
+            {               
+                if (room_number == 20 || room_number == 21 || room_number == 23)
                 {
-                    room_number = Room0(room_number, sentenceWhenMoving, roomsDirections);
+                    if (room_number == 20 || room_number == 23)
+                    {
+                        GameOver();
+                        room_number = Restart(room_number);
+                    }
+                    else
+                    {
+                        Win();
+                        room_number = Restart(room_number);
+                    }
                 }
-                else if (room_number == 1)
+                else
                 {
-                    room_number = Room1(room_number, sentenceWhenMoving, roomsDirections);
-                }
-                else if (room_number == 2)
-                {
-                    room_number = Room2(room_number, sentenceWhenMoving, roomsDirections);
-                }
-                else if (room_number == 3)
-                {
-                    GameOver();
-                    room_number = Restart(room_number);
-                }
-                else if (room_number == 4)
-                {
-                    room_number = Room4(room_number, sentenceWhenMoving, roomsDirections);
-                }
-                else if (room_number == 5)
-                {
-                    Win();
-                    room_number = Restart(room_number);
-                }
+                    room_number = Room(room_number, sentenceWhenMoving, roomsDirections);
+                }                                       
             }
-        }
-
-        private static int Room4(int room_number, Dictionary<string, string> sentenceWhenMoving)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static int Room0(int room_number, Dictionary<string, string> sentenceWhenMoving)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static int Room2(int room_number, Dictionary<string, string> sentenceWhenMoving)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static int Room1(int room_number, Dictionary<string, string> sentenceWhenMoving)
-        {
-            throw new NotImplementedException();
-        }
-
+        }        
         static void Intro()
         {
             Console.WriteLine("*********************************************");
@@ -177,9 +233,8 @@ namespace TP01
                 Console.ReadKey();
             }
             return roomID;
-
         }
-        static int Room0(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
+        static int Room(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
         {            
             Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
             DisplayStandardRoom(configForCurrentRoom);
@@ -198,67 +253,7 @@ namespace TP01
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
-        }        
-        static int Room1(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
-        {                      
-            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
-            DisplayStandardRoom(configForCurrentRoom);
-            string choice = Console.ReadLine();
-            if (configForCurrentRoom.ContainsKey(choice))
-            {
-                roomID = configForCurrentRoom[choice];
-                if (sentenceWhenMoving.ContainsKey(choice))
-                {
-                    Console.Clear();
-                    Console.WriteLine(sentenceWhenMoving[choice]);
-                }
-            }
-            else
-            {
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-        static int Room2(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
-        {          
-            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
-            DisplayStandardRoom(configForCurrentRoom);
-            string choice = Console.ReadLine();
-            if (configForCurrentRoom.ContainsKey(choice))
-            {
-                roomID = configForCurrentRoom[choice];
-                if (sentenceWhenMoving.ContainsKey(choice))
-                {
-                    Console.Clear();
-                    Console.WriteLine(sentenceWhenMoving[choice]);
-                }
-            }
-            else
-            {
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-        static int Room4(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
-        {           
-            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
-            DisplayStandardRoom(configForCurrentRoom);
-            string choice = Console.ReadLine();
-            if (configForCurrentRoom.ContainsKey(choice))
-            {
-                roomID = configForCurrentRoom[choice];
-                if (sentenceWhenMoving.ContainsKey(choice))
-                {
-                    Console.Clear();
-                    Console.WriteLine(sentenceWhenMoving[choice]);
-                }
-            }
-            else
-            {
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
+        }                                
         private static void GameOver()
         {           
             Console.WriteLine("");
