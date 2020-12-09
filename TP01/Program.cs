@@ -12,10 +12,10 @@ namespace TP01
     {
         public static bool gameRunning = true;
         public static bool haveSword = false;
-        public static int health = 10;
+        public static int health = 5;
     }
     class Program
-    {        
+    {
         static void Main(string[] args)
         {
             Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
@@ -23,22 +23,27 @@ namespace TP01
             sentenceWhenMoving.Add("s", "> going to south...");
             sentenceWhenMoving.Add("e", "> going to east...");
             sentenceWhenMoving.Add("w", "> going to west...");
-            
+
             string str = File.ReadAllText("Data.json");
             List<Dictionary<string, int>> roomsDirections = JsonConvert.DeserializeObject<List<Dictionary<string, int>>>(str);
 
             Console.OutputEncoding = Encoding.UTF8;
-            Intro();            
+            Intro();
             int room_number = 1;
-            
+
             while (MyClasse.gameRunning)
-            {               
-                if (room_number == 3 || room_number == 20 || room_number == 21 || room_number == 23)
+            {
+                if (MyClasse.health == 0)
                 {
-                    if (room_number == 20 || room_number == 23)
+                    GameOver();
+                    room_number = Restart(room_number);
+                }
+                if (room_number == 3 || room_number == 5 || room_number == 12 || room_number == 20 || room_number == 21 || room_number == 23)
+                {
+                    if (room_number == 5 || room_number == 12 || room_number == 20 || room_number == 23)
                     {
-                        GameOver();
-                        room_number = Restart(room_number);
+                        Trap();
+                        room_number = Room(room_number, sentenceWhenMoving, roomsDirections);
                     }
                     else if (room_number == 21)
                     {
@@ -55,17 +60,23 @@ namespace TP01
                         }
                         else
                         {
-                            Sword();                            
+                            Sword();
                             room_number = 4;
-                        }                       
+                        }
                     }
                 }
                 else
                 {
+                    Random rnd = new Random();
+                    int takeDamage = rnd.Next(1, 4);
+                    if (takeDamage == 4)
+                    {
+                        MonsterAttack();
+                    }
                     room_number = Room(room_number, sentenceWhenMoving, roomsDirections);
-                }                                       
+                }
             }
-        }        
+        }
         static void Intro()
         {
             Console.WriteLine("*********************************************");
@@ -123,13 +134,14 @@ namespace TP01
             }
         }
         static int Restart(int roomID)
-        {           
+        {
             Console.WriteLine("Play again ? ('y' for yes, 'n' for no)");
-            string restart = Console.ReadLine();           
+            string restart = Console.ReadLine();
             if (restart.Contains('y') || restart.Contains('n'))
             {
                 if (restart == "y")
-                {                   
+                {
+                    MyClasse.health = 5;
                     roomID = 1;
                 }
                 if (restart == "n")
@@ -145,7 +157,7 @@ namespace TP01
             return roomID;
         }
         static int Room(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
-        {            
+        {
             Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
             DisplayStandardRoom(configForCurrentRoom);
             Console.Write(roomID);
@@ -164,7 +176,94 @@ namespace TP01
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
-        }       
+        }
+        static void MonsterAttack()
+        {
+            Random rnd = new Random();
+            Console.WriteLine("                                 _.--\"\"--._                        ");
+            Console.WriteLine("      .                        .\"          \".                      ");
+            Console.WriteLine("     / \\    ,^.         /(     |            |      )\\              ");
+            Console.WriteLine("    /   `---. |--'\\    (  \\__..'--   --   --'\"\"-.-'  )           ");
+            Console.WriteLine("    |        :|    `>   '.     l_..-------.._l      .'               ");
+            Console.WriteLine("    |      __l;__ .'      \"-.__.||_.-'v'-._||`\"----\"                 ");
+            Console.WriteLine("     \\  .-' | |  `              l._       _.'                        ");
+            Console.WriteLine("      \\/    | |                   l`^^'^^'j                          ");
+            Console.WriteLine("            | |                _   \\_____/     _                     ");
+            Console.WriteLine("            | |               l `--__)-'(__.--' |                    ");
+            Console.WriteLine("            | |               | /`---``-----'\"\\ |  , -----.          ");
+            Console.WriteLine("            | |               )/  `--' '---'   \'-'  ___  `-.        ");
+            Console.WriteLine("            | |              //  `-'  '`----'  /  ,-'   I`.  \\       ");
+            Console.WriteLine("          _ L |_            //  `-.-.'`-----' /  /  |   |  `. \\      ");
+            Console.WriteLine("         '._' / \\         _/(   `/   )- ---' ;  /__.J   L.__.\\ :     ");
+            Console.WriteLine("          `._;/7(-.......'  /        ) (     |  |            | |     ");
+            Console.WriteLine("          `._;l _'--------_/        )-'/     :  |___.    _._./ ;     ");
+            Console.WriteLine("            | |                 .__ )-'\\  __  \\  \\  I   1   / /      ");
+            Console.WriteLine("            `-'                /   `-\\-(-'   \\ \\  `.|   | ,' /       ");
+            Console.WriteLine("                               \\__  `-'    __/  `-. `---'',-'        ");
+            Console.WriteLine("                                  )-._.-- (        `-----'           ");
+            Console.WriteLine("                                 )(  l\\ o ('..-.                     ");
+            Console.WriteLine("                           _..--' _'-' '--'.-. |                     ");
+            Console.WriteLine("                    __,,-'' _,,-''            \\ \\                    ");
+            Console.WriteLine("                   f'. _,,-'                   \\ \\                   ");
+            Console.WriteLine("                  ()--  |                       \\ \\                  ");
+            Console.WriteLine("                    \\.  |                       /  \\                 ");
+            Console.WriteLine("                      \\ \\                      |._  |                ");
+            Console.WriteLine("                       \\ \\                     |  ()|                ");
+            Console.WriteLine("                        \\ \\                     \\  /                 ");
+            Console.WriteLine("                         ) `-.                   | |                 ");
+            Console.WriteLine("                        // .__)                  | |                 ");
+            Console.WriteLine("                     _.//7'                      | |                 ");
+            Console.WriteLine("                   '---'                         |_|                 ");
+            Console.WriteLine("                                                (| |                 ");
+            Console.WriteLine("                                                 |  \\                ");
+            Console.WriteLine("                                                 |lll|               ");
+            Console.WriteLine("                                                 |||||               ");
+
+            Console.WriteLine("A monster attack !");
+            if (MyClasse.haveSword)
+            {
+                Console.WriteLine("Choice 1: Run for your life \nChoice 2: fight ");
+                int battleChoice = Console.Read();
+                if (battleChoice != 1 && battleChoice != 2)
+                {
+                    Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+                }
+                else
+                {
+                    if (battleChoice == 1)
+                    {
+                        int escape = rnd.Next(1, 3);
+                        if (escape != 3)
+                        {
+                            Console.WriteLine("escape impossible !");
+                            MyClasse.health--;
+                            MonsterAttack();
+                        }
+                    }
+                    else
+                    {
+                        int attack = rnd.Next(1, 4);
+                        if (attack == 4)
+                        {
+                            Console.WriteLine("You miss your target !");
+                            MyClasse.health--;
+                            MonsterAttack();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                int escape = rnd.Next(1, 2);
+                if (escape == 2)
+                {
+                    Console.WriteLine("escape impossible !");
+                    MyClasse.health--;
+                    MonsterAttack();
+                }                
+            }
+
+        }
         private static void Sword()
         {
             MyClasse.haveSword = true;
@@ -180,23 +279,39 @@ namespace TP01
             Console.WriteLine("   `--8--'  ");
             Console.WriteLine("      8     ");
             Console.WriteLine("      O     ");
-            
+
             Console.WriteLine(">>>>>>>>>>>> Congratulations, you found the legendary Master Sword !");
-            Console.ReadKey();           
+            Console.ReadKey();
+        }
+        private static void Trap()
+        {
+            MyClasse.health--;
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(">>>>>>>>>>>> It's a trap... you take damage :/");
+            Console.ReadKey();
         }
         private static void GameOver()
-        {           
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █  ■         ■  █");
-            Console.WriteLine(" █    ■     ■    █");
-            Console.WriteLine(" █      ■ ■      █");
-            Console.WriteLine(" █     ■   ■     █");
-            Console.WriteLine(" █   ■       ■   █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
-            Console.ReadKey();           
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine(" YOU ARE DEATH !");
+            Console.ReadKey();
         }
         private static void Win()
         {
