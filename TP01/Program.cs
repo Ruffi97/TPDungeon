@@ -8,64 +8,57 @@ namespace TP01
 {
     class Program
     {
-        Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
-        sentenceWhenMoving.Add("n", "> going to north...");
-        sentenceWhenMoving.Add("s", "> going to south...");
-        sentenceWhenMoving.Add("e", "> going to east..."); 
-        sentenceWhenMoving.Add("w", "> going to west...");
+        static void Main(string[] args)
+        {
+            Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
+            sentenceWhenMoving.Add("n", "> going to north...");
+            sentenceWhenMoving.Add("s", "> going to south...");
+            sentenceWhenMoving.Add("e", "> going to east...");
+            sentenceWhenMoving.Add("w", "> going to west...");
 
-        List<Dictionary<string, int> roomsDirections = new List<Dictionary<string, int>>();
-        roomsDirections.Add(new Dictionary<string, int>() {
+            List<Dictionary<string, int>> roomsDirections = new List<Dictionary<string, int>>();
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "n", 3 },
             { "e", 1 }
         });
-        roomsDirections.Add(new Dictionary<string, int>() {
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "n", 4 },
             { "w", 0 },
             { "e", 2 }
         });
-        roomsDirections.Add(new Dictionary<string, int>() {
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "n", 5 },
             { "w", 1 }
         });
-        roomsDirections.Add(new Dictionary<string, int>() {
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "s", 0 }
         });
-        roomsDirections.Add(new Dictionary<string, int>() {
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "s", 1 }
         });
-        roomsDirections.Add(new Dictionary<string, int>() {
+            roomsDirections.Add(new Dictionary<string, int>() {
             { "s", 2 }
         });
 
-        static void Main(string[] args)
-        {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.WriteLine("*********************************************");
-            Console.WriteLine("************ Welcome to the MAZE ************");
-            Console.WriteLine("*********************************************");
-            Console.WriteLine("");
-            Console.WriteLine("You are lost inside a Maze, try to escape...");
-            Console.WriteLine("");
-            Console.ReadKey();
-            Console.Clear();
-
+            Intro();
+            
             bool gameRunning = true;
             int room_number = 1;
-
+            
             while (gameRunning)
             {
                 if (room_number == 0)
                 {
-                    room_number = room1(room_number);
+                    room_number = Room0(room_number, sentenceWhenMoving, roomsDirections);
                 }
                 else if (room_number == 1)
                 {
-                    room_number = room2(room_number);
+                    room_number = Room1(room_number, sentenceWhenMoving, roomsDirections);
                 }
                 else if (room_number == 2)
                 {
-                    room_number = room3(room_number);
+                    room_number = Room2(room_number, sentenceWhenMoving, roomsDirections);
                 }
                 else if (room_number == 3)
                 {
@@ -74,7 +67,7 @@ namespace TP01
                 }
                 else if (room_number == 4)
                 {
-                    room_number = room5(room_number);
+                    room_number = Room4(room_number, sentenceWhenMoving, roomsDirections);
                 }
                 else if (room_number == 5)
                 {
@@ -82,141 +75,160 @@ namespace TP01
                     gameRunning = false;
                 }
             }
-        }      
+        }
 
-        static int room0(int roomID, sentenceWhenMoving, roomsDirections)
+        private static int Room4(int room_number, Dictionary<string, string> sentenceWhenMoving)
         {
-            Console.WriteLine("");
-            Console.WriteLine("▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
-            Console.WriteLine("█               █ ");
-            Console.WriteLine("█       ▲       ▀▀");
-            Console.WriteLine("█       ☻ ►      E");
-            Console.WriteLine("█               ▄▄");
-            Console.WriteLine("█               █ ");
-            Console.WriteLine("█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
-            Console.WriteLine("");
-            Console.WriteLine("There are 2 doors in your room: (n)orth,(e)ast, where do you want to go ? ");
+            throw new NotImplementedException();
+        }
 
-            string choice = Console.ReadLine();
-            Dictionary<string, int> currentDirections = roomsDirections[room_number];
-            if (currentDirections.ContainsKey("n"))
+        private static int Room0(int room_number, Dictionary<string, string> sentenceWhenMoving)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static int Room2(int room_number, Dictionary<string, string> sentenceWhenMoving)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static int Room1(int room_number, Dictionary<string, string> sentenceWhenMoving)
+        {
+            throw new NotImplementedException();
+        }
+
+        static void Intro()
+        {
+            Console.WriteLine("*********************************************");
+            Console.WriteLine("************ Welcome to the MAZE ************");
+            Console.WriteLine("*********************************************");
+            Console.WriteLine("");
+            Console.WriteLine("You are lost inside a Maze, try to escape...");
+            Console.WriteLine("");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        private static void DisplayStandardRoom(Dictionary<string, int> configForCurrentRoom)
+        {
+            bool canGoNorth = configForCurrentRoom.ContainsKey("n");
+            bool canGoSouth = configForCurrentRoom.ContainsKey("s");
+            bool canGoEast = configForCurrentRoom.ContainsKey("e");
+            bool canGoWest = configForCurrentRoom.ContainsKey("w");
+            Console.WriteLine("");
+            generateRoom(canGoNorth, canGoSouth, canGoEast, canGoWest);
+            Console.WriteLine("");
+            Console.Write("There are " + configForCurrentRoom.Count() + " door(s) in your room: ");
+            if (canGoNorth)
+                Console.Write("(n)orth ");
+            if (canGoSouth)
+                Console.Write("(s)outh ");
+            if (canGoEast)
+                Console.Write("(e)ast ");
+            if (canGoWest)
+                Console.Write("(w)est ");
+            Console.WriteLine("where do you want to go ? ");
+        }
+        static void generateRoom(bool canGoNorth, bool canGoSouth, bool canGoEast, bool canGoWest)
+        {
+            for (int y = 0; y < 7; y++)
             {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[n]);
-                roomID = 3;
+                string currentTextLine = "";
+                for (int x = 0; x < 17; x++)
+                {
+                    bool isInside = x > 0 && x < 16 && y > 0 && y < 6;
+                    bool northDoor = canGoNorth && x == 8 && y == 0;
+                    bool southDoor = canGoSouth && x == 8 && y == 6;
+                    bool eastDoor = canGoEast && x == 16 && y == 3;
+                    bool westDoor = canGoWest && x == 0 && y == 3;
+                    bool isDoor = northDoor || southDoor || eastDoor || westDoor; // canGoNorth, canGoSouth, canGoEast, canGoWest
+                    if (isInside || isDoor)
+                    {
+                        currentTextLine += " ";
+                    }
+                    else
+                    {
+                        currentTextLine += "#";
+                    }
+                }
+                Console.WriteLine(currentTextLine);
             }
-            else if (currentDirections.ContainsKey("e"))
+        }
+        static int Room0(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
+        {            
+            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
+            DisplayStandardRoom(configForCurrentRoom);
+            string choice = Console.ReadLine();
+            if (configForCurrentRoom.ContainsKey(choice))
             {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[e]);
-                roomID = 1;
+                roomID = configForCurrentRoom[choice];
+                if (sentenceWhenMoving.ContainsKey(choice))
+                {
+                    Console.Clear();
+                    Console.WriteLine(sentenceWhenMoving[choice]);
+                }
             }
             else
             {
-                Console.Clear();
+                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
+            }
+            return roomID;
+        }        
+        static int Room1(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
+        {                      
+            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
+            DisplayStandardRoom(configForCurrentRoom);
+            string choice = Console.ReadLine();
+            if (configForCurrentRoom.ContainsKey(choice))
+            {
+                roomID = configForCurrentRoom[choice];
+                if (sentenceWhenMoving.ContainsKey(choice))
+                {
+                    Console.Clear();
+                    Console.WriteLine(sentenceWhenMoving[choice]);
+                }
+            }
+            else
+            {
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
         }
-
-        static int room1(int roomID, sentenceWhenMoving, roomsDirections)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄ ");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine("▀▀       ▲       ▀▀");
-            Console.WriteLine("W      ◄ ☻ ►      E");
-            Console.WriteLine("▄▄               ▄▄");
-            Console.WriteLine(" █               █ ");
-            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ ");
-            Console.WriteLine("");
-            Console.WriteLine("There are 3 doors in your room: (n)orth,(w)est, (e)ast, where do you want to go ? ");
-
+        static int Room2(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
+        {          
+            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
+            DisplayStandardRoom(configForCurrentRoom);
             string choice = Console.ReadLine();
-            Dictionary<string, int> currentDirections = roomsDirections[room_number];
-            if (currentDirections.ContainsKey("n"))
+            if (configForCurrentRoom.ContainsKey(choice))
             {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[n]);
-                roomID = 4;
-            }
-            else if (currentDirections.ContainsKey("w"))
-            {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[w]);
-                roomID = 0;
-            }
-            else if (currentDirections.ContainsKey("e"))
-            {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[e]);
-                roomID = 2;
+                roomID = configForCurrentRoom[choice];
+                if (sentenceWhenMoving.ContainsKey(choice))
+                {
+                    Console.Clear();
+                    Console.WriteLine(sentenceWhenMoving[choice]);
+                }
             }
             else
             {
-                Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
         }
-
-        static int room2(int roomID, sentenceWhenMoving, roomsDirections)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄█ N █▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine("▀▀       ▲       █");
-            Console.WriteLine("W      ◄ ☻       █");
-            Console.WriteLine("▄▄               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine("There are 2 doors in your room: (n)orth and (w)est, where do you want to go ?");
+        static int Room4(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
+        {           
+            Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
+            DisplayStandardRoom(configForCurrentRoom);
             string choice = Console.ReadLine();
-            Dictionary<string, int> currentDirections = roomsDirections[room_number];
-            if (currentDirections.ContainsKey("n"))
+            if (configForCurrentRoom.ContainsKey(choice))
             {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[n]);
-                roomID = 5;
-            }
-            else if (currentDirections.ContainsKey("w"))
-            {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[w]);
-                roomID = 1;
+                roomID = configForCurrentRoom[choice];
+                if (sentenceWhenMoving.ContainsKey(choice))
+                {
+                    Console.Clear();
+                    Console.WriteLine(sentenceWhenMoving[choice]);
+                }
             }
             else
             {
-                Console.Clear();
-                Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
-            }
-            return roomID;
-        }
-
-        static int room4(int roomID, sentenceWhenMoving, roomsDirections)
-        {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █       ☻       █");
-            Console.WriteLine(" █       ▼       █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄ S ▄▄▄▄▄▄█");
-            Console.WriteLine("");
-            Console.WriteLine("There is only one door in your room: (s)sud");
-            string choice = Console.ReadLine();
-            Dictionary<string, int> currentDirections = roomsDirections[room_number];
-            if (currentDirections.ContainsKey("s"))
-            {
-                Console.Clear();
-                Console.WriteLine(sentenceWhenMoving[s]);
-                roomID = 1;
-            }
-            else
-            {
-                Console.Clear();
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
@@ -235,7 +247,6 @@ namespace TP01
             Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
             Console.ReadKey();
         }
-
         private static void Win()
         {
             Console.WriteLine("");
