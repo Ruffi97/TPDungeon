@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace TP01
 {
-    class Program
+    static class MyClasse
     {
+        public static bool gameRunning = true;
+        
+    }
+    class Program
+    {        
         static void Main(string[] args)
         {
             Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
@@ -41,12 +46,10 @@ namespace TP01
         });
 
             Console.OutputEncoding = Encoding.UTF8;
-            Intro();
-            
-            bool gameRunning = true;
+            Intro();            
             int room_number = 1;
             
-            while (gameRunning)
+            while (MyClasse.gameRunning)
             {
                 if (room_number == 0)
                 {
@@ -63,7 +66,7 @@ namespace TP01
                 else if (room_number == 3)
                 {
                     GameOver();
-                    gameRunning = false;
+                    room_number = Restart(room_number);
                 }
                 else if (room_number == 4)
                 {
@@ -72,7 +75,7 @@ namespace TP01
                 else if (room_number == 5)
                 {
                     Win();
-                    gameRunning = false;
+                    room_number = Restart(room_number);
                 }
             }
         }
@@ -140,7 +143,7 @@ namespace TP01
                     bool southDoor = canGoSouth && x == 8 && y == 6;
                     bool eastDoor = canGoEast && x == 16 && y == 3;
                     bool westDoor = canGoWest && x == 0 && y == 3;
-                    bool isDoor = northDoor || southDoor || eastDoor || westDoor; // canGoNorth, canGoSouth, canGoEast, canGoWest
+                    bool isDoor = northDoor || southDoor || eastDoor || westDoor;
                     if (isInside || isDoor)
                     {
                         currentTextLine += " ";
@@ -152,6 +155,29 @@ namespace TP01
                 }
                 Console.WriteLine(currentTextLine);
             }
+        }
+        static int Restart(int roomID)
+        {           
+            Console.WriteLine("Play again ? ('y' for yes, 'n' for no)");
+            string restart = Console.ReadLine();           
+            if (restart.Contains('y') || restart.Contains('n'))
+            {
+                if (restart == "y")
+                {                   
+                    roomID = 1;
+                }
+                if (restart == "n")
+                {
+                    MyClasse.gameRunning = false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("invalid responce");
+                Console.ReadKey();
+            }
+            return roomID;
+
         }
         static int Room0(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
         {            
@@ -234,7 +260,7 @@ namespace TP01
             return roomID;
         }
         private static void GameOver()
-        {
+        {           
             Console.WriteLine("");
             Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
             Console.WriteLine(" █  ■         ■  █");
@@ -245,7 +271,7 @@ namespace TP01
             Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
             Console.WriteLine("");
             Console.WriteLine(">>>>>>>>>>>> It's a trap... you are DEAD :/");
-            Console.ReadKey();
+            Console.ReadKey();           
         }
         private static void Win()
         {
