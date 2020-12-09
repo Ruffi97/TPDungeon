@@ -11,7 +11,8 @@ namespace TP01
     static class MyClasse
     {
         public static bool gameRunning = true;
-        
+        public static bool haveSword = false;
+        public static int health = 10;
     }
     class Program
     {        
@@ -22,112 +23,7 @@ namespace TP01
             sentenceWhenMoving.Add("s", "> going to south...");
             sentenceWhenMoving.Add("e", "> going to east...");
             sentenceWhenMoving.Add("w", "> going to west...");
-
-            /*List<Dictionary<string, int>> roomsDirections = new List<Dictionary<string, int>>();
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 5 },
-            { "e", 1 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 6 },
-            { "w", 0 },
-            { "e", 2 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 7 },
-            { "w", 1 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "e", 4 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 3 },
-            { "n", 9 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 0 },
-            { "n", 10 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 1 },
-            { "n", 11 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 2 },
-            { "w", 8 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 7 },
-            { "n", 13 },
-            { "e", 9 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 8 },
-            { "s", 4 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 15 },
-            { "e", 11 },
-            { "s", 5 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 6 },
-            { "e", 12 },
-            { "w", 10 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 11 },
-            { "e", 13 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 12 },
-            { "e", 14 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 13 },
-            { "n", 19 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 10 },
-            { "n", 20 },
-            { "e", 16 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "w", 15 },
-            { "e", 17 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "n", 2 },
-            { "w", 16 },
-            { "e", 22 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 13 },
-            { "w", 17 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 14 },
-            { "n", 24 }
-        });
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 15 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "e", 22 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 17 },
-            { "w", 21 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "e", 24 }
-        }); 
-            roomsDirections.Add(new Dictionary<string, int>() {
-            { "s", 19 },
-            { "w", 23 }
-        });
-            string jsonString = JsonConvert.SerializeObject(roomsDirections);
-            Console.WriteLine(jsonString);*/
+            
             string str = File.ReadAllText("Data.json");
             List<Dictionary<string, int>> roomsDirections = JsonConvert.DeserializeObject<List<Dictionary<string, int>>>(str);
 
@@ -137,17 +33,31 @@ namespace TP01
             
             while (MyClasse.gameRunning)
             {               
-                if (room_number == 20 || room_number == 21 || room_number == 23)
+                if (room_number == 3 || room_number == 20 || room_number == 21 || room_number == 23)
                 {
                     if (room_number == 20 || room_number == 23)
                     {
                         GameOver();
                         room_number = Restart(room_number);
                     }
-                    else
+                    else if (room_number == 21)
                     {
                         Win();
                         room_number = Restart(room_number);
+                    }
+                    else if (room_number == 3)
+                    {
+                        if (MyClasse.haveSword)
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("You already own the legendary sword !");
+                            room_number = 4;
+                        }
+                        else
+                        {
+                            Sword();                            
+                            room_number = 4;
+                        }                       
                     }
                 }
                 else
@@ -238,6 +148,7 @@ namespace TP01
         {            
             Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
             DisplayStandardRoom(configForCurrentRoom);
+            Console.Write(roomID);
             string choice = Console.ReadLine();
             if (configForCurrentRoom.ContainsKey(choice))
             {
@@ -253,7 +164,26 @@ namespace TP01
                 Console.WriteLine("THIS CHOICE DOESN'T EXIST!");
             }
             return roomID;
-        }                                
+        }       
+        private static void Sword()
+        {
+            MyClasse.haveSword = true;
+
+            Console.WriteLine("      .     ");
+            Console.WriteLine("     / \\    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("     | |    ");
+            Console.WriteLine("   `--8--'  ");
+            Console.WriteLine("      8     ");
+            Console.WriteLine("      O     ");
+            
+            Console.WriteLine(">>>>>>>>>>>> Congratulations, you found the legendary Master Sword !");
+            Console.ReadKey();           
+        }
         private static void GameOver()
         {           
             Console.WriteLine("");
