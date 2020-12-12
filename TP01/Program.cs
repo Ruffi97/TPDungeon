@@ -7,15 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TP01
-{
-    static class MyClasse
+{    
+    class Program
     {
+        public static int room_number = 1;
         public static bool gameRunning = true;
         public static bool haveSword = false;
         public static int health = 5;
-    }
-    class Program
-    {
         static void Main(string[] args)
         {
             Dictionary<string, string> sentenceWhenMoving = new Dictionary<string, string>();
@@ -31,13 +29,8 @@ namespace TP01
             Intro();
             int room_number = 1;
 
-            while (MyClasse.gameRunning)
-            {
-                if (MyClasse.health == 0)
-                {
-                    GameOver();
-                    room_number = Restart(room_number);
-                }
+            while (gameRunning)
+            {               
                 if (room_number == 3 || room_number == 5 || room_number == 12 || room_number == 20 || room_number == 21 || room_number == 23)
                 {
                     if (room_number == 5 || room_number == 12 || room_number == 20 || room_number == 23)
@@ -52,7 +45,7 @@ namespace TP01
                     }
                     else if (room_number == 3)
                     {
-                        if (MyClasse.haveSword)
+                        if (haveSword)
                         {
                             Console.WriteLine("");
                             Console.WriteLine("You already own the legendary sword !");
@@ -68,12 +61,12 @@ namespace TP01
                 else
                 {
                     Random rnd = new Random();
-                    int takeDamage = rnd.Next(1, 4);
-                    if (takeDamage == 4)
+                    int possibleAttack = rnd.Next(0, 4);
+                    if (possibleAttack == 3)
                     {
                         MonsterAttack();
                     }
-                    room_number = Room(room_number, sentenceWhenMoving, roomsDirections);
+                    room_number = Room(room_number, sentenceWhenMoving, roomsDirections);                   
                 }
             }
         }
@@ -141,12 +134,12 @@ namespace TP01
             {
                 if (restart == "y")
                 {
-                    MyClasse.health = 5;
+                    health = 5;
                     roomID = 1;
                 }
-                if (restart == "n")
+                else if (restart == "n")
                 {
-                    MyClasse.gameRunning = false;
+                    gameRunning = false;
                 }
             }
             else
@@ -159,8 +152,8 @@ namespace TP01
         static int Room(int roomID, Dictionary<string, string> sentenceWhenMoving, List<Dictionary<string, int>> roomsDirections)
         {
             Dictionary<string, int> configForCurrentRoom = roomsDirections[roomID];
-            DisplayStandardRoom(configForCurrentRoom);
-            Console.Write(roomID);
+            Random rnd = new Random();           
+            DisplayStandardRoom(configForCurrentRoom);          
             string choice = Console.ReadLine();
             if (configForCurrentRoom.ContainsKey(choice))
             {
@@ -168,7 +161,7 @@ namespace TP01
                 if (sentenceWhenMoving.ContainsKey(choice))
                 {
                     Console.Clear();
-                    Console.WriteLine(sentenceWhenMoving[choice]);
+                    Console.WriteLine(sentenceWhenMoving[choice]);                                     
                 }
             }
             else
@@ -190,10 +183,10 @@ namespace TP01
             Console.WriteLine("      \\/    | |                   l`^^'^^'j                          ");
             Console.WriteLine("            | |                _   \\_____/     _                     ");
             Console.WriteLine("            | |               l `--__)-'(__.--' |                    ");
-            Console.WriteLine("            | |               | /`---``-----'\"\\ |  , -----.          ");
-            Console.WriteLine("            | |               )/  `--' '---'   \'-'  ___  `-.        ");
-            Console.WriteLine("            | |              //  `-'  '`----'  /  ,-'   I`.  \\       ");
-            Console.WriteLine("          _ L |_            //  `-.-.'`-----' /  /  |   |  `. \\      ");
+            Console.WriteLine("            | |               | /`---``-----'\"\\ | ,-----.          ");
+            Console.WriteLine("            | |               )/  `--' '---'   \'-'   ____`-.        ");
+            Console.WriteLine("            | |              //  `-'  '`----'  /  ,-'    I`. \\       ");
+            Console.WriteLine("          _ L |_            //  `-.-.'`-----' /  /  |   |   \\ \\      ");
             Console.WriteLine("         '._' / \\         _/(   `/   )- ---' ;  /__.J   L.__.\\ :     ");
             Console.WriteLine("          `._;/7(-.......'  /        ) (     |  |            | |     ");
             Console.WriteLine("          `._;l _'--------_/        )-'/     :  |___.    _._./ ;     ");
@@ -218,9 +211,10 @@ namespace TP01
             Console.WriteLine("                                                 |  \\                ");
             Console.WriteLine("                                                 |lll|               ");
             Console.WriteLine("                                                 |||||               ");
-
-            Console.WriteLine("A monster attack !");
-            if (MyClasse.haveSword)
+            Console.WriteLine("");
+            Console.WriteLine("A monster's attack !");
+            Console.ReadKey();
+            if (haveSword)
             {
                 Console.WriteLine("Choice 1: Run for your life \nChoice 2: fight ");
                 int battleChoice = Console.Read();
@@ -236,8 +230,14 @@ namespace TP01
                         if (escape != 3)
                         {
                             Console.WriteLine("escape impossible !");
-                            MyClasse.health--;
-                            MonsterAttack();
+                            health--;
+                            Console.WriteLine("Life's points: " + health);
+                            Console.ReadKey();
+                            if (health == 0)
+                            {
+                                GameOver();
+                            }
+                            else { MonsterAttack(); }
                         }
                     }
                     else
@@ -246,8 +246,14 @@ namespace TP01
                         if (attack == 4)
                         {
                             Console.WriteLine("You miss your target !");
-                            MyClasse.health--;
-                            MonsterAttack();
+                            health--;
+                            Console.WriteLine("Life's points: " + health);
+                            Console.ReadKey();
+                            if (health == 0)
+                            {
+                                GameOver();
+                            }
+                            else { MonsterAttack(); }
                         }
                     }
                 }
@@ -258,15 +264,21 @@ namespace TP01
                 if (escape == 2)
                 {
                     Console.WriteLine("escape impossible !");
-                    MyClasse.health--;
-                    MonsterAttack();
+                    health--;
+                    Console.WriteLine("Life's points: " + health);
+                    Console.ReadKey();
+                    if (health == 0)
+                    {
+                        GameOver();
+                    }
+                    else { MonsterAttack(); }                   
                 }                
             }
-
+            
         }
         private static void Sword()
         {
-            MyClasse.haveSword = true;
+            haveSword = true;
 
             Console.WriteLine("      .     ");
             Console.WriteLine("     / \\    ");
@@ -285,45 +297,47 @@ namespace TP01
         }
         private static void Trap()
         {
-            MyClasse.health--;
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
+            health--;
             Console.WriteLine(" ");
             Console.WriteLine(" ");
             Console.WriteLine(">>>>>>>>>>>> It's a trap... you take damage :/");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine("Life's points: " + health);
             Console.ReadKey();
+            if (health == 0)
+            {
+                GameOver();
+            }
         }
         private static void GameOver()
         {
+            Console.Clear();
             Console.WriteLine(" ");
             Console.WriteLine(" ");
+            Console.WriteLine("YOUR LIFE'S POINTS IS FALL AT 0");           
             Console.WriteLine(" ");
             Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" ");
-            Console.WriteLine(" YOU ARE DEATH !");
+            Console.WriteLine("YOU ARE DEATH !\n");
             Console.ReadKey();
+            Restart(room_number);
         }
         private static void Win()
         {
-            Console.WriteLine("");
-            Console.WriteLine(" ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █      EXIT     █");
-            Console.WriteLine(" █       ☻       █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █               █");
-            Console.WriteLine(" █▄▄▄▄▄▄   ▄▄▄▄▄▄█");
-            Console.WriteLine("");
+            Console.Clear();
+            Console.WriteLine("        ______        ");
+            Console.WriteLine("     ,-' ;  ! `-.     ");
+            Console.WriteLine("    / :  !  :  . \\    ");
+            Console.WriteLine("   |_ ;   __:  ;  |   ");
+            Console.WriteLine("   )| .  :)(.  !  |   ");
+            Console.WriteLine("   |\"    (##)  _  |   ");
+            Console.WriteLine("   |  :  ;`'  (_) (   ");
+            Console.WriteLine("   |  :  :  .     |   ");
+            Console.WriteLine("   )_ !  ,  ;  ;  |   ");
+            Console.WriteLine("   || .  .  :  :  |   ");
+            Console.WriteLine("   |\" .  |  :  .  |   ");
+            Console.WriteLine("   |____.-----.___|   ");
+            Console.WriteLine();
             Console.WriteLine(">>>>>>>>>>>> You found the EXIT... Congratulations:)");
             Console.ReadKey();
         }
